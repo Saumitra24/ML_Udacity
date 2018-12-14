@@ -14293,7 +14293,10 @@ Look at the graph at the bottom left from the cell above(the visualization creat
     Trees are added one at a time, and existing trees in the model are not changed. A gradient descent                 procedure is used to minimize the loss when adding trees.
 
 </code></pre>
+<p>Layman Explanation: The  process starts with a random guess of donors. Then it calculates error (Actual - Predicted Answer).</p>
+<p>Next step, it will again guess donors, which reduces the error by maximum. Again, it calculates the error. The second donors guess has to reduce it further. But instead of each guess in isolation, when you add a new one to the chain, it tries to improve a bit on what the rest of the chain already thinks. So, a new decision is influenced by all the decision that have already voiced an opinion. This can only be done by trial and error  method.</p>
 <p>Reference: <a href="https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/">https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/</a></p>
+<p><a href="https://www.quora.com/What-is-Gradient-Boosting-Models-and-Random-Forests-using-layman-terms">https://www.quora.com/What-is-Gradient-Boosting-Models-and-Random-Forests-using-layman-terms</a></p>
 
 </div>
 </div>
@@ -14451,6 +14454,7 @@ Best Fit Parameters {&#39;learning_rate&#39;: 0.1, &#39;min_samples_leaf&#39;: 5
 <h4 id="Results:">Results:<a class="anchor-link" href="#Results:">&#182;</a></h4><table>
 <thead><tr>
 <th style="text-align:center">Metric</th>
+<th style="text-align:center">Naive Model</th>
 <th style="text-align:center">Unoptimized Model</th>
 <th style="text-align:center">Optimized Model</th>
 </tr>
@@ -14458,11 +14462,13 @@ Best Fit Parameters {&#39;learning_rate&#39;: 0.1, &#39;min_samples_leaf&#39;: 5
 <tbody>
 <tr>
 <td style="text-align:center">Accuracy Score</td>
+<td style="text-align:center">0.2478</td>
 <td style="text-align:center">0.8611</td>
 <td style="text-align:center">0.8614</td>
 </tr>
 <tr>
 <td style="text-align:center">F-score</td>
+<td style="text-align:center">0.2917</td>
 <td style="text-align:center">0.7323</td>
 <td style="text-align:center">0.7343</td>
 </tr>
