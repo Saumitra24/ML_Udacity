@@ -11787,6 +11787,7 @@ Jan 3rd, 2019</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Domain-Background">Domain Background<a class="anchor-link" href="#Domain-Background">&#182;</a></h3><p>Airbnb, which is an online marketplace where people list, discover, and book accomodations around the world. It has collected various datapoints about users. This data about the usage patterns of its present user base can be utilized to predict patterns about its future users to provide them with customized suggestions to serve Airbnb's customers better. Airbnb had posted this on Kaggle as a Recruitment Challenge. Using user
 data effectively can help organizations increase metrics such as sales, user experience, customer retention and customer satisfaction. Machine Learning techniques can help organizations attain useful predictions using these data. The motivation for pursuing this project is to understand how to work on real world datasets and challenges that companies like Airbnb consider to be important and valuable for their companies and learn to provide similar value for organizations that I work with in the future.</p>
+<p><a href="https://medium.com/airbnb-engineering/learning-market-dynamics-for-optimal-pricing-97cffbcc53e3">https://medium.com/airbnb-engineering/learning-market-dynamics-for-optimal-pricing-97cffbcc53e3</a></p>
 
 </div>
 </div>
@@ -11809,6 +11810,40 @@ data effectively can help organizations increase metrics such as sales, user exp
 <h3 id="Datasets-and-Inputs">Datasets and Inputs<a class="anchor-link" href="#Datasets-and-Inputs">&#182;</a></h3><p>The dataset is composed of 5 CSV files. It has been obtained from a Kaggle Competition provided by Airbnb. <a href="https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/data">[link]</a></p>
 <p>The most important file is the <code>train_users</code> file which has 16 columns containing user id, dates of account creation, first booking date, gender, age, signup method, signup app, destination etc along with the target variable <code>country_destination</code> and has 213451 rows. The <code>test_users</code> is similar to the previous file discussed but does not have our target variable and we have to use these to predict the destination and has 62096 rows. We have a good amount of data to work with to produce meaningful models.</p>
 <p>The other three files contain web session logs (<code>sessions.csv</code>) for the users, summary statistics of destination countries (<code>countries</code>) and summary statistics of about the users age group, gender, etc. (<code>age_gender_bkts.csv</code>)</p>
+<h5 id="File-descriptions">File descriptions<a class="anchor-link" href="#File-descriptions">&#182;</a></h5><ul>
+<li><strong>train_users.csv</strong> - the training set of users</li>
+<li><strong>test_users.csv</strong> - the test set of users<ul>
+<li>id: user id</li>
+<li>date_account_created: the date of account creation</li>
+<li>timestamp_first_active: timestamp of the first activity, note that it can be earlier than date_account_created or date_first_booking because a user can search before signing up</li>
+<li>date_first_booking: date of first booking</li>
+<li>gender</li>
+<li>age</li>
+<li>signup_method</li>
+<li>signup_flow: the page a user came to signup up from</li>
+<li>language: international language preference</li>
+<li>affiliate_channel: what kind of paid marketing</li>
+<li>affiliate_provider: where the marketing is e.g. google, craigslist, other</li>
+<li>first_affiliate_tracked: whats the first marketing the user interacted with before the signing up</li>
+<li>signup_app</li>
+<li>first_device_type</li>
+<li>first_browser</li>
+<li>country_destination: this is the target variable you are to predict</li>
+</ul>
+</li>
+<li><strong>sessions.csv</strong> - web sessions log for users<ul>
+<li>user_id: to be joined with the column 'id' in users table</li>
+<li>action</li>
+<li>action_type</li>
+<li>action_detail</li>
+<li>device_type</li>
+<li>secs_elapsed</li>
+</ul>
+</li>
+<li><strong>countries.csv</strong> - summary statistics of destination countries in this dataset and their locations</li>
+<li><strong>age_gender_bkts.csv</strong> - summary statistics of users' age group, gender, country of destination</li>
+</ul>
+<p>As of now I am not plannning to split training data further into custom-training and cross-validataion set. Once the solution is ready we can first calculate the accuracy of model and then re-evaluate and test the same to check whether accuracy of the model is getting increased or not.</p>
 
 </div>
 </div>
@@ -11855,12 +11890,25 @@ data effectively can help organizations increase metrics such as sales, user exp
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Project-Design">Project Design<a class="anchor-link" href="#Project-Design">&#182;</a></h3><p>The project will be composed of the following steps:</p>
 <ul>
-<li><p><em>Data Exploration</em>: Visualizing the dataset, detect outliers, remove null values, cleaning the dataset, check relevance of every column to the target column, cluster the dataset using unsupervised techniques to see if we can engineer new features, splitting training dataset into training and testing sets etc.</p>
+<li><em>Data Exploration and Pre-processing</em>:<ol>
+<li>Visualizing the dataset.</li>
+<li>Detect outliers.</li>
+<li>Remove null values.</li>
+<li>Cleaning the dataset.</li>
+<li>Check relevance of every column to the target column.</li>
+<li>Cluster the dataset using unsupervised techniques to see if we can engineer new features.</li>
+<li>Replacing unknown and missing values with '-1'.</li>
+<li>Replacing continuous values with interval type values(Like age interval).</li>
+<li>Computing season using dates and using them instead of dates.</li>
+<li>Converting some features into One-hot-encoding features.</li>
+</ol>
 </li>
-<li><p><em>Training</em>: Consider multiple supervised ML models and select the best one, use techniques such as cross validation, and optimizing using GridSearchCV for hyperparameter optimization.</p>
-</li>
-<li><p><em>Testing and Optimizing</em>: Optimizing the model offline, using the trained models to test on Kaggle and improve the rank on kaggle.</p>
-</li>
+</ul>
+<ul>
+<li><em>Training</em>: Consider multiple supervised ML models and select the best one, use techniques such as cross validation, and optimizing using GridSearchCV for hyperparameter optimization.</li>
+</ul>
+<ul>
+<li><em>Testing and Optimizing</em>: Optimizing the model offline, using the trained models to test on Kaggle and improve the rank on kaggle.</li>
 </ul>
 
 </div>
