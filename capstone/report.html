@@ -11800,6 +11800,7 @@ data effectively can help organizations increase metrics such as sales, user exp
 <h3 id="Problem-Statement">Problem Statement<a class="anchor-link" href="#Problem-Statement">&#182;</a></h3><p>By accurately predicting where a new user will book their first travel experience, Airbnb can share more personalized content with their community, decrease the average time to first booking, and better forecast demand.</p>
 <p>Using the data from <a href="https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings">Airbnb New User Bookings</a> dataset, the challenge is to predict the destination of choice for the users' first booking. This data includes demographics of users and their session data. The model will utilize these demographics and session data to make models that can predict the destinations.</p>
 <p>In this project, I plan to use Machine Learning Techniques to predict in which country a new user will make their first booking on Airbnb. This project will involve data cleaning, data exploration using visualizations, and testing various algorithms for classification for the same.</p>
+<p>We will try to solve the problem using various algorthims like RandomForest, XGBoost, GridSearch, etc.with different set of parameters which will gives us the suitable algorthim for this type of problem along with the more depth of algorthims.</p>
 
 </div>
 </div>
@@ -11853,13 +11854,35 @@ data effectively can help organizations increase metrics such as sales, user exp
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Evaluation-Metrics">Evaluation Metrics<a class="anchor-link" href="#Evaluation-Metrics">&#182;</a></h3><p>Since this is a Kaggle Challenge, we already have an evaluation metric, that is the NDCG (Normalized Discounted Cumulative Gain)</p>
-<p>For each new user, we are to make a maximum of 5 predictions on the country of the first booking. The ground truth country is marked with relevance = 1, while the rest have relevance = 0.</p>
+<p>For each new user, we have to make a maximum of 5 predictions on the country of the first booking. The ground truth country is marked with relevance = 1, while the rest have relevance = 0.</p>
 <p>$DCG_k=\sum_{i=1}^k\frac{2^{rel_i}-1}{\log_2{\left(i+1\right)}}$</p>
 <p>$nDCG_k=\frac{DCG_k}{IDCG_k}$</p>
 <p>where $rel_i$ is the relevance of the result at position $i$ and $k = 5$.</p>
 <p>For example, if for a particular user the destination is FR, then the predictions become:</p>
 <p>[ FR ] gives a $NDCG=\frac{2^{1}-1}{log_{2}(1+1)}=1.0$</p>
 <p>[ US, FR ] gives a $DCG=\frac{2^{0}-1}{log_{2}(1+1)}+\frac{2^{1}-1}{log_{2}(2+1)}=\frac{1}{1.58496}=0.6309$</p>
+<p>Normalized Discounted Cumulative Gain (NDCG) measures the performance of a recommendation system based on the graded relevance of the recommended entities. It varies from 0.0 to 1.0, with 1.0 representing the ideal ranking of the entities.</p>
+<h4 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:">&#182;</a></h4>
+<pre><code>ground_truth : array, shape = [n_samples]
+    Ground truth (true labels represended as integers).
+predictions : array, shape = [n_samples, n_classes]
+    Predicted probabilities.
+k : int
+    Rank.
+
+</code></pre>
+<h4 id="Returns:">Returns:<a class="anchor-link" href="#Returns:">&#182;</a></h4>
+<pre><code>score : float
+
+</code></pre>
+<h4 id="Example:">Example:<a class="anchor-link" href="#Example:">&#182;</a></h4>
+<pre><code>ground_truth = [1, 0, 2]
+predictions = [[0.15, 0.55, 0.2], [0.7, 0.2, 0.1], [0.06, 0.04, 0.9]]
+score = ndcg_score(ground_truth, predictions, k=2)
+    #&gt; 1.0
+predictions = [[0.9, 0.5, 0.8], [0.7, 0.2, 0.1], [0.06, 0.04, 0.9]]
+score = ndcg_score(ground_truth, predictions, k=2)
+    #&gt; 0.6666666666</code></pre>
 
 </div>
 </div>
@@ -12290,6 +12313,15 @@ In scikit-learn, we have GridSearchCV which uses an estimator and a set of hyper
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The main issue in coding is faced in choosing the right parameters to give the appropriate result and this include too much of re-work in changing parameters. I would suggest it's better to go through purpose of each parameter before directly proceeding towards the coding, this will take time but definetly give user a better experience going forward.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[40]:</div>
@@ -12432,8 +12464,12 @@ In scikit-learn, we have GridSearchCV which uses an estimator and a set of hyper
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Justification">Justification<a class="anchor-link" href="#Justification">&#182;</a></h3><p>One of the important points to discus about a trained machine learning algorithm is whether it will scale, will it be feasible in the scenario and performance should be consistent with varied data. We can then say whether the model is <strong>robust</strong> or not.
-The model, although trained with a reduced feature space, gives a better result with the private subset of the the training set as can be seen by the results on Kaggle. Also, the training and prediction times were very less due to the feature space reduction step and the NDCG score was also good enough. Depending on the scale of the deployment, the parameters and the number of features can be scaled as well. Hence, the model seems to be robust. Alongside this, the model seems to be trustable and aligns well with our expected solutions outcomes.</p>
+<h3 id="Justification">Justification<a class="anchor-link" href="#Justification">&#182;</a></h3><p>One of the important points to discus about a trained machine learning algorithm is whether it will scale, will it be feasible in the scenario and performance should be consistent with varied data. We can then say whether the model is robust or not.
+The model, although trained with a reduced feature space, gives a better result with the private subset of the the training set as can be seen by the results on Kaggle. Also, the training and prediction times were very less due to the feature space reduction step and the NDCG score was also good enough. Depending on the scale of the deployment, the parameters and the number of features can be scaled as well.</p>
+
+<pre><code>&gt; Based on the above discussion, the model seems to be robust.
+&gt; As we are already delaing outliers in data pre-processing, so that should not cause an issue.
+&gt; Alongside this, the model seems to be trustable and aligns well with our expected solutions outcomes.</code></pre>
 
 </div>
 </div>
