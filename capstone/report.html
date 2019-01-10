@@ -12457,6 +12457,11 @@ In scikit-learn, we have GridSearchCV which uses an estimator and a set of hyper
 <h2 id="IV.-Results">IV. Results<a class="anchor-link" href="#IV.-Results">&#182;</a></h2><h3 id="Model-Evaluation-and-Validation">Model Evaluation and Validation<a class="anchor-link" href="#Model-Evaluation-and-Validation">&#182;</a></h3><p>Below we can see the final NDCG scores of our models. We were able to get a maximum score of <code>0.82352</code>. Although, since we reduced our feature dimension, it is expected that training on the full dataset would result in much better scores.</p>
 <p>Since, our goal was to implement a valid solution and not a competitive one, we have performed reasonably okay given the little computational resources at our side.</p>
 
+<pre><code>Benchmark Score: 0.8067
+RandomForest Score: 0.8175
+XGBoost Score: 0.81616
+XGBoost Score(After Parameterizing tuning): 0.82352</code></pre>
+
 </div>
 </div>
 </div>
